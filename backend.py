@@ -5,7 +5,6 @@ from skimage.metrics import structural_similarity as ssim
 
 # Database functions
 def create_database():
-    def create_database():
     try:
      conn = sqlite3.connect('pan_card_db.sqlite')
      c = conn.cursor()
