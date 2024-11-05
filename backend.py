@@ -5,19 +5,17 @@ from skimage.metrics import structural_similarity as ssim
 
 # Database functions
 def create_database():
-     conn = sqlite3.connect('pan_card_db.sqlite')
-     c = conn.cursor()
-     c.execute(''' 
+    conn = sqlite3.connect('pan_card_db.sqlite')
+    c = conn.cursor()
+    c.execute(''' 
         CREATE TABLE IF NOT EXISTS pan_cards (
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
             image BLOB NOT NULL 
         )
-     ''')
-     conn.commit()
-     conn.close()
-
-   
+    ''')
+    conn.commit()
+    conn.close()
 
 def insert_image(name, image_blob):
     conn = sqlite3.connect('pan_card_db.sqlite')
@@ -40,6 +38,9 @@ def compare_images(original_blob, uploaded_image, method='ssim'):
     uploaded_image = np.array(uploaded_image.convert("RGB"))
     uploaded_image = cv2.cvtColor(uploaded_image, cv2.COLOR_RGB2BGR)
 
+    # Resize uploaded image to match original image dimensions
+    uploaded_image = cv2.resize(uploaded_image, (original_image.shape[1], original_image.shape[0]))
+
     if method == 'ssim':
         original_gray = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
         uploaded_gray = cv2.cvtColor(uploaded_image, cv2.COLOR_BGR2GRAY)
@@ -59,4 +60,3 @@ def compare_images(original_blob, uploaded_image, method='ssim'):
 
     else:
         raise ValueError("Unsupported method. Use 'ssim' or 'orb'.")
-
