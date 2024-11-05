@@ -24,6 +24,7 @@ Clone or download this project to your local machine.
 git clone <repository-url>
 cd <repository-directory>
 ```
+
 ### Step 2: Create a Virtual Environment and Install Requirements
 
 1. **Create a virtual environment**:
